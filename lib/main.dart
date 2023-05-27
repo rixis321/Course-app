@@ -1,6 +1,7 @@
 import 'package:course_app/app_blocks.dart';
 import 'package:course_app/app_events.dart';
 import 'package:course_app/app_states.dart';
+import 'package:course_app/pages/welcome/bloc/welcome_blocs.dart';
 import 'package:course_app/pages/welcome/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,11 +17,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AppBlocs(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => WelcomeBloc(),
+        ),
+        BlocProvider(create: (context) => AppBlocs())
+      ],
       child: ScreenUtilInit(
-        builder: (context,child)=> const MaterialApp(
-          home: Welcome(),
+        builder: (context, child) =>MaterialApp(
+          home: const Welcome(),
+          routes: {
+            "myHomePage":(context) =>const MyHomePage(),
+          },
         ),
       ),
     );
@@ -40,8 +49,8 @@ class MyHomePage extends StatelessWidget {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: BlocBuilder<AppBlocs,AppStates>(
-          builder: (context,state){
+        child: BlocBuilder<AppBlocs, AppStates>(
+          builder: (context, state) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -61,11 +70,15 @@ class MyHomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           FloatingActionButton(
-              onPressed: ()=> BlocProvider.of<AppBlocs>(context).add(Increment()),
+            heroTag: "heroTag1",
+              onPressed: () =>
+                  BlocProvider.of<AppBlocs>(context).add(Increment()),
               tooltip: 'Increment',
               child: const Icon(Icons.add)),
           FloatingActionButton(
-              onPressed: ()=> BlocProvider.of<AppBlocs>(context).add(Decrement()),
+              heroTag: "heroTag2",
+              onPressed: () =>
+                  BlocProvider.of<AppBlocs>(context).add(Decrement()),
               tooltip: 'Decrement',
               child: const Icon(Icons.remove))
         ],
@@ -73,4 +86,3 @@ class MyHomePage extends StatelessWidget {
     );
   }
 }
-
