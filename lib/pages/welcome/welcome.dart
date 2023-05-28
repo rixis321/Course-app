@@ -120,13 +120,13 @@ class _WelcomeState extends State<Welcome> {
             if(index < 3){
               pageController.animateToPage(
                   index,
-                  duration: const Duration(milliseconds: 700),
+                  duration: const Duration(milliseconds: 500),
                   curve: Curves.decelerate
               );
             }else{
 
               //Navigator.of(context).push(MaterialPageRoute(builder: (context)=> MyHomePage()));
-              Navigator.of(context).pushNamedAndRemoveUntil("myHomePage", (route) => false);
+              Navigator.of(context).pushNamedAndRemoveUntil("signIn", (route) => false);
             }
           },
           child: Container(
