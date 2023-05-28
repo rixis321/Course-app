@@ -11,12 +11,14 @@ AppBar buildAppBar() {
         height: 1.0,
       ),
     ),
-    title: Text(
-      "Log In",
-      style: TextStyle(
-          color: AppColors.primaryText,
-          fontSize: 16.sp,
-          fontWeight: FontWeight.normal),
+    title: Center(
+      child: Text(
+        "Log In",
+        style: TextStyle(
+            color: AppColors.primaryText,
+            fontSize: 16.sp,
+            fontWeight: FontWeight.normal),
+      ),
     ),
   );
 }
