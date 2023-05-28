@@ -40,7 +40,9 @@ class _SignInState extends State<SignIn> {
                     ],
                   ),
                 ),
-                forgotPassword()
+                forgotPassword(),
+                buildLogInAndRegButton("Log in","login"),
+                buildLogInAndRegButton("Register","register"),
               ],
             ),
           ),
