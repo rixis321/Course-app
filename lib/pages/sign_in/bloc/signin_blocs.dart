@@ -13,6 +13,6 @@ class SignInBloc extends Bloc<SignInEvent,SignInState>{
     emit(state.copyWith(email: event.email));
   }
   void _passwordEvent(PasswordEvent event, Emitter<SignInState> emit){
-    emit(state.copyWith(email: event.password));
+    emit(state.copyWith(password: event.password));
   }
 }
