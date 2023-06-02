@@ -13,6 +13,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'app_states.dart';
+import 'common/values/colors.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,6 +37,9 @@ class MyApp extends StatelessWidget {
         builder: (context, child) =>MaterialApp(
           theme: ThemeData(
             appBarTheme: const AppBarTheme(
+              iconTheme: IconThemeData(
+                color: AppColors.primaryText
+              ),
               elevation: 0,
               backgroundColor: Colors.white
             )

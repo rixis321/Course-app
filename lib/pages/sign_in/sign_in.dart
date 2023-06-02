@@ -1,9 +1,11 @@
 import 'package:course_app/pages/sign_in/bloc/signin_states.dart';
 import 'package:course_app/pages/sign_in/signin_controller.dart';
-import 'package:course_app/pages/sign_in/widgets/sign_in_widget.dart';
+//import 'package:course_app/pages/sign_in/widgets/sign_in_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../common_widgets.dart';
+
 
 import 'bloc/signin_blocs.dart';
 import 'bloc/signin_events.dart';
@@ -25,7 +27,7 @@ class _SignInState extends State<SignIn> {
             child: SafeArea(
               child: Scaffold(
                 backgroundColor: Colors.white,
-                appBar:buildAppBar(),
+                appBar:buildAppBar("Log In"),
                 body: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,7 +62,7 @@ class _SignInState extends State<SignIn> {
                       buildLogInAndRegButton("Log in","login",(){
                             SignInController(context: context).handleSignIn("email");
                           }),
-                      buildLogInAndRegButton("Register","register", (){
+                      buildLogInAndRegButton("Sign Up","register", (){
                             Navigator.of(context).pushNamed("register");
 
                       }),
