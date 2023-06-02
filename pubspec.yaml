@@ -39,6 +39,7 @@ dependencies:
   flutter_screenutil:
   dots_indicator:
   firebase_auth: ^4.6.1
+  fluttertoast: ^8.2.2
 
 dev_dependencies:
   flutter_test:
