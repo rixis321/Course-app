@@ -2,7 +2,7 @@ import 'package:course_app/common/values/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-AppBar buildAppBar() {
+AppBar buildAppBar(String type) {
   return AppBar(
     bottom: PreferredSize(
       preferredSize: const Size.fromHeight(1.0),
@@ -13,7 +13,7 @@ AppBar buildAppBar() {
     ),
     title: Center(
       child: Text(
-        "Log In",
+        type,
         style: TextStyle(
             color: AppColors.primaryText,
             fontSize: 16.sp,
@@ -160,14 +160,14 @@ Widget buildLogInAndRegButton(String buttonName, String buttonType,
           ]),
       child: Center(
           child: Text(
-        buttonName,
-        style: TextStyle(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.normal,
-            color: buttonType == "login"
-                ? AppColors.primaryBackground
-                : AppColors.primaryText),
-      )),
+            buttonName,
+            style: TextStyle(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.normal,
+                color: buttonType == "login"
+                    ? AppColors.primaryBackground
+                    : AppColors.primaryText),
+          )),
     ),
   );
 }

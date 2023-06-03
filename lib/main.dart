@@ -2,6 +2,7 @@ import 'package:course_app/app_blocks.dart';
 import 'package:course_app/app_events.dart';
 import 'package:course_app/app_states.dart';
 import 'package:course_app/pages/bloc_providers.dart';
+import 'package:course_app/pages/register/register.dart';
 import 'package:course_app/pages/sign_in/bloc/signin_blocs.dart';
 import 'package:course_app/pages/sign_in/sign_in.dart';
 import 'package:course_app/pages/welcome/bloc/welcome_blocs.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'app_states.dart';
+import 'common/values/colors.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,14 +37,18 @@ class MyApp extends StatelessWidget {
         builder: (context, child) =>MaterialApp(
           theme: ThemeData(
             appBarTheme: const AppBarTheme(
+              iconTheme: IconThemeData(
+                color: AppColors.primaryText
+              ),
               elevation: 0,
               backgroundColor: Colors.white
             )
           ),
           home: const Welcome(),
           routes: {
-            "myHomePage":(context) =>const MyHomePage(),
+            //"myHomePage":(context) =>const MyHomePage(),
             "signIn": (context)=> const SignIn(),
+            "register": (context) => const Register()
           },
         ),
       ),
