@@ -1,6 +1,7 @@
 import 'package:course_app/app_blocks.dart';
 import 'package:course_app/app_events.dart';
 import 'package:course_app/app_states.dart';
+import 'package:course_app/pages/application/application_page.dart';
 import 'package:course_app/pages/bloc_providers.dart';
 import 'package:course_app/pages/register/register.dart';
 import 'package:course_app/pages/sign_in/bloc/signin_blocs.dart';
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
               backgroundColor: Colors.white
             )
           ),
-          home: const Welcome(),
+          home: const ApplicationPage(),
           routes: {
             //"myHomePage":(context) =>const MyHomePage(),
             "signIn": (context)=> const SignIn(),
