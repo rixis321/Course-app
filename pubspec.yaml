@@ -40,6 +40,7 @@ dependencies:
   dots_indicator:
   firebase_auth: ^4.6.1
   fluttertoast: ^8.2.2
+  shared_preferences: ^2.1.1
 
 dev_dependencies:
   flutter_test:
