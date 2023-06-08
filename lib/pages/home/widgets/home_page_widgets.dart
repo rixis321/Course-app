@@ -1,4 +1,5 @@
 import 'package:course_app/common/values/colors.dart';
+import 'package:course_app/common/widgets/base_text_widget.dart';
 import 'package:course_app/pages/home/bloc/home_page_blocs.dart';
 import 'package:course_app/pages/home/bloc/home_page_events.dart';
 import 'package:course_app/pages/home/bloc/home_page_states.dart';
@@ -172,9 +173,9 @@ Widget menuView() {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              _reusableText("Choose your course"),
+              reusableText("Choose your course"),
               GestureDetector(
-                  child: _reusableText("See all",
+                  child: reusableText("See all",
                       color: AppColors.primaryThreeElementText, fontSize: 10)),
             ],
           )),
@@ -196,20 +197,6 @@ Widget menuView() {
   );
 }
 
-Widget _reusableText(String text,
-    {Color color = AppColors.primaryText,
-    int fontSize = 16,
-    FontWeight fontWeight = FontWeight.bold}) {
-  return Text(
-    text,
-    style: TextStyle(
-      color: color,
-      fontWeight: fontWeight,
-      fontSize: fontSize.sp,
-    ),
-  );
-}
-
 //reusable text for menu buttons
 Widget _reusableMenuText(String menuText,
     {Color textColor = AppColors.primaryElementText,
@@ -222,24 +209,19 @@ Widget _reusableMenuText(String menuText,
       border: Border.all(color: backgroundColor),
     ),
     padding: EdgeInsets.only(left: 15.w, right: 15.w, top: 5.h, bottom: 5.h),
-    child: _reusableText(menuText,
+    child: reusableText(menuText,
         color: textColor, fontWeight: FontWeight.normal, fontSize: 11),
   );
 }
 
 //course grid view UI
-Widget courseGrid(){
+Widget courseGrid() {
   return Container(
     padding: EdgeInsets.all(12.w),
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15.w),
         image: const DecorationImage(
-            fit: BoxFit.fill,
-            image: AssetImage(
-                "assets/icons/Image(2).png"
-            )
-        )
-    ),
+            fit: BoxFit.fill, image: AssetImage("assets/icons/Image(2).png"))),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -253,10 +235,11 @@ Widget courseGrid(){
           style: TextStyle(
               color: AppColors.primaryElementText,
               fontWeight: FontWeight.bold,
-              fontSize: 11.sp
-          ),
+              fontSize: 11.sp),
         ),
-        SizedBox(height: 5.h,),
+        SizedBox(
+          height: 5.h,
+        ),
         Text(
           "Flutter best course",
           maxLines: 1,
@@ -266,8 +249,7 @@ Widget courseGrid(){
           style: TextStyle(
               color: AppColors.primaryFourElementText,
               fontWeight: FontWeight.normal,
-              fontSize: 8.sp
-          ),
+              fontSize: 8.sp),
         )
       ],
     ),
