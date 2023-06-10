@@ -39,7 +39,7 @@ class UserLoginResponseEntity {
   String? msg;
   UserItem? data;
 
-  UserLoginResponseEntity({
+  UserLoginResponseEntity( {
     this.code,
     this.msg,
     this.data,

@@ -1,6 +1,7 @@
 import 'package:course_app/common/values/colors.dart';
 import 'package:course_app/pages/home/bloc/home_page_blocs.dart';
 import 'package:course_app/pages/home/bloc/home_page_states.dart';
+import 'package:course_app/pages/home/home_controller.dart';
 import 'package:course_app/pages/home/widgets/home_page_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,11 +15,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late HomeController _homeController;
+  @override
+  void initState(){
+    super.initState();
+    _homeController = HomeController(context: context);
+    _homeController.init();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return _homeController.userProfile!=null?Scaffold(
       backgroundColor: Colors.white,
-      appBar: buildAppBar(),
+      appBar: buildAppBar(_homeController.userProfile!.avatar.toString()),
       body: BlocBuilder<HomePageBlocs,HomePageStates>(
         builder: (context,state){
           return Container(
@@ -34,7 +43,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 SliverToBoxAdapter(
                   child: homePageText(
-                    "Morenka",
+                    _homeController.userProfile!.name!,
                     top: 5,
                   ),
                 ),
@@ -49,18 +58,18 @@ class _HomePageState extends State<HomePage> {
                   child: menuView(),
                 ),
                 SliverPadding(padding: EdgeInsets.symmetric(
-                  vertical: 18.h,
-                  horizontal: 0.w
+                    vertical: 18.h,
+                    horizontal: 0.w
                 ),
                   sliver:SliverGrid(
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,
-                      mainAxisSpacing: 15,
-                      crossAxisSpacing: 15,
-                      childAspectRatio: 1.6
-                      
+                        mainAxisSpacing: 15,
+                        crossAxisSpacing: 15,
+                        childAspectRatio: 1.6
+
                     ),delegate: SliverChildBuilderDelegate(
-                    childCount: 4,
-                      (BuildContext context, int index){
+                      childCount: 4,
+                          (BuildContext context, int index){
                         return GestureDetector(
                           onTap: (){
 
@@ -77,6 +86,6 @@ class _HomePageState extends State<HomePage> {
           );
         },
       ),
-    );
+    ):Container();
   }
 }
