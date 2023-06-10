@@ -9,6 +9,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'common/values/colors.dart';
 
+//TEST
+
 Future<void> main() async {
 
   await Global.init();
