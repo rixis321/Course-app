@@ -15,21 +15,21 @@ class UserController extends Controller
     /**
      * Create User
      * @param Request $request
-     * @return User 
+     * @return User
      */
     public function createUser(Request $request)
     {
         try {
             //Validated
-            $validateUser = Validator::make($request->all(), 
+            $validateUser = Validator::make($request->all(),
             [
-                'avatar'=> 'required',
+                //'avatar'=> 'required',
                 'type'=> 'required',
                 'open_id'=> 'required',
                 'name' => 'required',
                 'email' => 'required',
-                'password'=> 'required|min:6'
-                
+                //'password'=> 'required|min:6'
+
             ]);
 
             if($validateUser->fails()){
@@ -39,7 +39,7 @@ class UserController extends Controller
                     'errors' => $validateUser->errors()
                 ], 401);
             }
-            
+
             //validated will have all user field values
             $validated = $validateUser->validated();
 
@@ -48,6 +48,12 @@ class UserController extends Controller
             $map['open_id'] = $validated['open_id'];
 
             $user = User::where($map)->first();
+
+             return response()->json([
+               'status' => true,
+               'data' => $user,
+               'message' => 'passed validation'
+                ], 200);
 
             //whether user has already logged in or not
             //if user is not exists in database then save him in the database
@@ -58,13 +64,13 @@ class UserController extends Controller
                 // user first time created
                 $validated['created_at'] = Carbon::now();
                 //encrypt password
-                $validated['password'] = Hash::make($validated['password']);
+               // $validated['password'] = Hash::make($validated['password']);
                 //return the id of the row after saving
                 $userID = User::insertGetId($validated);
 
                 //user's all the information
                 $userInfo = User::where('id','=',$userID)->first();
-                
+
 
                 $accessToken = $userInfo->createToken(uniqid())->plainTextToken;
 
@@ -77,7 +83,7 @@ class UserController extends Controller
                 ], 200);
             }
 
-            //user previously has logged in 
+            //user previously has logged in
             $accessToken = $user->createToken(uniqid())->plainTextToken;
             $user->accessToken = $accessToken;
             User::where('open_id','=',$validated['open_id'])->update(['access_token'=>$accessToken]);
@@ -103,7 +109,7 @@ class UserController extends Controller
     public function loginUser(Request $request)
     {
         try {
-            $validateUser = Validator::make($request->all(), 
+            $validateUser = Validator::make($request->all(),
             [
                 'email' => 'required|email',
                 'password' => 'required'
