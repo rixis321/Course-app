@@ -19,8 +19,14 @@ class UserController extends AdminController
         $grid->column('id', __('Id'));
         $grid->column('name', __('Name'));
         $grid->column('email', __('Email'));
+
         $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->disableActions();
+
+        $grid->disableCreateButton();
+        $grid->disableExport();
+        $grid->disableFilter();
+
 
         return $grid;
     }
