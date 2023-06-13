@@ -17,6 +17,13 @@ use Illuminate\Http\Request;
 
 class CourseController extends AdminController
 {
+
+    protected function grid(){
+        $grid = new Grid(new Course());
+
+        return $grid;
+    }
+
     //
     protected function detail($id)
         {
@@ -36,11 +43,25 @@ class CourseController extends AdminController
         protected function form()
             {
                 $form = new Form(new Course());
-                $form->select('parent_id', __('Parent Category'))
-                ->options((new CourseType())::selectOptions());
-                $form->text('title', __('Title'));
+                $form->text('name', __('Name'));
+                //getting categories
+                //key value pair -> last one is the key
+                $result = CourseType::pluck('title', 'id');
+                //selecting one of the options from result
+                $form->select('type_id', __('Category'))->options($result);
+                $form->image('thumbnail', __('Thumbnail'))->uniqueName();
+                $form->file('video', __('Video'))->uniqueName();
+                $form->text('description', __('Description'));
+                $form->decimal('price', __('Price'));
+                $form->number('lesson_num', __('Lesson number'));
+                $form->number('video_length', __('Video length'));
+                $result = User::pluck('name', 'token');
+                $form->select('user_token', __('Teacher'))->options($result);
+                $form->display('created_at', __('Created at'));
+                $form->display('updated_at', __('Updated at'));
+               /*$form->text('title', __('Title'));
                 $form->textarea('description', __('Description'));
-                $form->number('Order', __('Order'));
+                $form->number('Order', __('Order'));*/
 
                 return $form;
             }
