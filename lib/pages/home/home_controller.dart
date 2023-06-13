@@ -1,6 +1,9 @@
 import 'package:course_app/common/entities/user.dart';
 import 'package:course_app/global.dart';
+import 'package:course_app/pages/home/bloc/home_page_blocs.dart';
+import 'package:course_app/pages/home/bloc/home_page_events.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../common/apis/course_api.dart';
 
@@ -14,8 +17,7 @@ class HomeController{
 
    var result = await CourseAPI.courseList();
    if(result.code==200){
-     print("perfect");
-     print(result.data![0].name);
+     context.read<HomePageBlocs>().add(HomePageCourseItem(result.data!));
    }else{
      print(result.code);
    }

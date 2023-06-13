@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../common/entities/course.dart';
+
 AppBar buildAppBar(String avatar) {
   return AppBar(
     title: Container(
@@ -216,19 +218,22 @@ Widget _reusableMenuText(String menuText,
 }
 
 //course grid view UI
-Widget courseGrid() {
+Widget courseGrid(CourseItem item) {
   return Container(
     padding: EdgeInsets.all(12.w),
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15.w),
-        image: const DecorationImage(
-            fit: BoxFit.fill, image: AssetImage("assets/icons/Image(2).png"))),
+        image:  DecorationImage(
+            fit: BoxFit.fill,
+            image: NetworkImage(AppConstants.SERVER_UPLOADS+item.thumbnail!)
+        )
+    ),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Best Course for IT and Engineerign",
+          item.name??"",
           maxLines: 1,
           overflow: TextOverflow.fade,
           textAlign: TextAlign.left,
@@ -242,7 +247,7 @@ Widget courseGrid() {
           height: 5.h,
         ),
         Text(
-          "Flutter best course",
+          item.description??"",
           maxLines: 1,
           overflow: TextOverflow.fade,
           textAlign: TextAlign.left,
