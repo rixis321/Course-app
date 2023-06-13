@@ -12,6 +12,7 @@ class UserController extends AdminController
 {
     protected $title ='Members';
 
+    //showing rows
     protected function grid()
     {
         $grid = new Grid(new User());
@@ -44,6 +45,7 @@ class UserController extends AdminController
         return $show;
     }
 
+    //gets called when crating new form or edit a row or info
     protected function form()
     {
         $form = new Form(new User());
