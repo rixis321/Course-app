@@ -12,7 +12,13 @@ class HomeController{
 
   Future<void> init() async {
 
-    await CourseAPI.courseList();
+   var result = await CourseAPI.courseList();
+   if(result.code==200){
+     print("perfect");
+     print(result.data![0].name);
+   }else{
+     print(result.code);
+   }
 
   }
 }

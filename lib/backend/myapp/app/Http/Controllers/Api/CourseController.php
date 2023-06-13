@@ -11,12 +11,22 @@ class CourseController extends Controller
 
     public function courseList(){
 
-        $result = Course::select('name', 'thumbnail', 'lesson_num', 'price', 'id')->get();
 
-        return response()->json([
-                       'code' => 200,
-                       'msg' => 'My course list is here',
-                       'data' => $result
-                    ], 200);
+        try{
+            $result = Course::select('name', 'thumbnail', 'lesson_num', 'price', 'id')
+            ->get();
+
+                return response()->json([
+                               'code' => 200,
+                               'msg' => 'My course list is here',
+                               'data' => $result
+                            ], 200);
+        }catch(\Throwable $throw){
+            return response()->json([
+                'code'=>500,
+                'msd'=> 'The field does not exist or there is syntax error',
+                'data'=>$throw->getMessage()
+            ], 500);
+        }
     }
 }

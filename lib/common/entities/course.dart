@@ -40,7 +40,8 @@ class CourseListResponseEntity {
       CourseListResponseEntity(
         code: json["code"],
         msg: json["msg"],
-        data: json["data"] == null ? [] : List<CourseItem>.from(json["data"].map((x) => CourseItem.fromJson(x))),
+        data: json["data"] == null ? [] : List<CourseItem>.from(
+            json["data"].map((x) => CourseItem.fromJson(x))),
       );
 }
 
@@ -190,7 +191,7 @@ class CourseItem {
         description: json["description"],
         thumbnail: json["thumbnail"],
         video: json["video"],
-        price: json["price"],
+        price: json["price"].toString(),
         amount_total: json["amount_total"],
         lesson_num: json["lesson_num"],
         video_len: json["video_len"],
