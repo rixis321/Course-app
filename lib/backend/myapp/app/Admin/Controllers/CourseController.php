@@ -18,24 +18,66 @@ use Illuminate\Http\Request;
 class CourseController extends AdminController
 {
 
-    protected function grid(){
-        $grid = new Grid(new Course());
+    /**
+         * Title for current resource.
+         *
+         * @var string
+         */
+        protected $title = 'Course';
 
-        return $grid;
-    }
+        /**
+         * Make a grid builder.
+         *
+         * @return Grid
+         */
+        protected function grid()
+        {
+            $grid = new Grid(new Course());
 
-    //
-    protected function detail($id)
+            //first argument is database field
+            $grid->column('id', __('Id'));
+            $grid->column('user_token', __('Teacher'))->display(function ($token){
+                return User::where('token', '=', $token)->value('name');
+            });
+            $grid->column('name', __('Name'));
+            //50 50 to size
+            $grid->column('thumbnail', __('Thumbnail'))->image('', 50, 50);
+            $grid->column('description', __('Description'));
+            $grid->column('type_id', __('Type id'));
+            $grid->column('price', __('Price'));
+            $grid->column('lesson_num', __('Lesson num'));
+            $grid->column('video_length', __('Video length'));
+
+            $grid->column('created_at', __('Created at'));
+
+
+            return $grid;
+        }
+
+        /**
+         * Make a show builder.
+         *
+         * @param mixed $id
+         * @return Show
+         */
+        protected function detail($id)
         {
             $show = new Show(Course::findOrFail($id));
 
             $show->field('id', __('Id'));
-            $show->field('title', __('Category'));
+
+            $show->field('name', __('Name'));
+            $show->field('thumbnail', __('Thumbnail'));
+
             $show->field('description', __('Description'));
-            $show->field('order', __("Order"));
+
+            $show->field('price', __('Price'));
+            $show->field('lesson_num', __('Lesson num'));
+            $show->field('video_length', __('Video length'));
+            $show->field('follow', __('Follow'));
+            $show->field('score', __('Score'));
             $show->field('created_at', __('Created at'));
             $show->field('updated_at', __('Updated at'));
-
 
             return $show;
         }
