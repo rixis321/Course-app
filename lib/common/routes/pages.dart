@@ -2,6 +2,7 @@ import 'package:course_app/common/routes/names.dart';
 import 'package:course_app/global.dart';
 import 'package:course_app/pages/application/application_page.dart';
 import 'package:course_app/pages/application/bloc/app_blocs.dart';
+import 'package:course_app/pages/course/bloc/course_detail_blocs.dart';
 import 'package:course_app/pages/home/bloc/home_page_blocs.dart';
 import 'package:course_app/pages/home/home_page.dart';
 import 'package:course_app/pages/profile/settings/bloc/settings_blocs.dart';
@@ -14,6 +15,8 @@ import 'package:course_app/pages/welcome/bloc/welcome_blocs.dart';
 import 'package:course_app/pages/welcome/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../pages/course/course_detaill.dart';
 
 class AppPages {
   static List<PageEntity> routes() {
@@ -50,6 +53,11 @@ class AppPages {
           route: AppRoutes.SETTINGS,
           page: const SettingsPage(),
           bloc: BlocProvider(create: (_)=> SettingsBlocs(),)
+      ),
+      PageEntity(
+          route: AppRoutes.COURSE_DETAIL,
+          page: const CourseDetail(),
+          bloc: BlocProvider(create: (_)=> CourseDetailBloc(),)
       ),
     ];
   }

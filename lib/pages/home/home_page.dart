@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../common/entities/user.dart';
+import '../../common/routes/names.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -15,21 +18,31 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late HomeController _homeController;
+  late UserItem userProfile;
   @override
   void initState(){
     super.initState();
-    _homeController = HomeController(context: context);
-    _homeController.init();
+    //_homeController = HomeController(context: context);
+    //_homeController.init();
+    userProfile = HomeController(context: context).userProfile!;
+  }
+
+  @override
+  void didDependenciesChange(){
+    super.didChangeDependencies();
+    userProfile = HomeController(context: context).userProfile!;
   }
 
   @override
   Widget build(BuildContext context) {
-    return _homeController.userProfile!=null?Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
-      appBar: buildAppBar(_homeController.userProfile!.avatar.toString()),
+      appBar: buildAppBar(userProfile.avatar.toString()),
       body: BlocBuilder<HomePageBlocs,HomePageStates>(
         builder: (context,state){
+          if(state.courseItem.isEmpty){
+            HomeController(context: context).init();
+          }
           return Container(
             margin: EdgeInsets.symmetric(vertical: 0, horizontal: 25.w),
             child: CustomScrollView(
@@ -43,7 +56,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 SliverToBoxAdapter(
                   child: homePageText(
-                    _homeController.userProfile!.name!,
+                    userProfile!.name!,
                     top: 5,
                   ),
                 ),
@@ -68,13 +81,18 @@ class _HomePageState extends State<HomePage> {
                         childAspectRatio: 1.6
 
                     ),delegate: SliverChildBuilderDelegate(
-                      childCount: 4,
+                      childCount: state.courseItem.length,
                           (BuildContext context, int index){
                         return GestureDetector(
                           onTap: (){
-
+                            Navigator.of(context).pushNamed(
+                              AppRoutes.COURSE_DETAIL,
+                              arguments: {
+                                "id":state.courseItem.elementAt(index).id
+                              }
+                            );
                           },
-                          child: courseGrid(),
+                          child: courseGrid(state.courseItem[index]),
                         );
                       }
                   ),
@@ -86,6 +104,6 @@ class _HomePageState extends State<HomePage> {
           );
         },
       ),
-    ):Container();
+    );Container();
   }
 }
