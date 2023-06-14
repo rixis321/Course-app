@@ -16,4 +16,6 @@ class AppRoutes{
 
   //settings page
   static const SETTINGS = "/settings";
+
+  static const COURSE_DETAIL = "/course_detail";
 }

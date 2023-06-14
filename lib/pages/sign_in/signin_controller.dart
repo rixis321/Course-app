@@ -11,6 +11,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+
+import '../home/home_controller.dart';
 // diwevig538@vaband.com
 // Qwerty123
 
@@ -59,7 +61,10 @@ class SignInController {
             // 1 means email login
             loginRequestEntity.type = 1;
             
-            asyncPostAllData(loginRequestEntity);
+            await asyncPostAllData(loginRequestEntity);
+            if(context.mounted){
+              await HomeController(context: context).init();
+            }
             
 
           } else {
@@ -99,7 +104,10 @@ class SignInController {
        //used for authorization
        Global.storageService.setString(AppConstants.STORAGE_USER_TOKEN_KEY,result.data!.access_token!);
        EasyLoading.dismiss();
-       Navigator.of(context).pushNamedAndRemoveUntil("/application", (route) => false);
+
+       if(context.mounted){
+         Navigator.of(context).pushNamedAndRemoveUntil("/application", (route) => false);
+       }
 
      }catch(e){
        print("saving local storage error ${e.toString()}");

@@ -38,10 +38,10 @@ class StorageService{
 
   UserItem? getUserProfile() {
     var profileOffline = _prefs.getString(AppConstants.STORAGE_USER_PROFILE_KEY)??"";
-    if(profileOffline.isNotEmpty){
+   // if(profileOffline.isNotEmpty){
      return UserItem.fromJson(jsonDecode(profileOffline));
-    }
-    return null;
+   // }
+  //  return null;
   }
 
 }

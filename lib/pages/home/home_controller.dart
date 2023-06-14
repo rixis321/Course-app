@@ -8,19 +8,31 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../common/apis/course_api.dart';
 
 class HomeController{
-  final BuildContext context;
-  HomeController({required this.context});
+  late BuildContext context;
+  UserItem? get userProfile => Global.storageService.getUserProfile();
+  static final HomeController _singleton = HomeController._internal();
 
-  UserItem? userProfile = Global.storageService.getUserProfile();
+  HomeController._internal();
+
+  //factory contructor for signleton
+  factory HomeController({required BuildContext context}){
+    _singleton.context = context;
+    return _singleton;
+  }
+
 
   Future<void> init() async {
 
-   var result = await CourseAPI.courseList();
-   if(result.code==200){
-     context.read<HomePageBlocs>().add(HomePageCourseItem(result.data!));
-   }else{
-     print(result.code);
-   }
-
+    if(Global.storageService.getUserToken().isNotEmpty){
+      var result = await CourseAPI.courseList();
+      print("the result is ${result.data![0]}");
+      if(result.code==200){
+        context.read<HomePageBlocs>().add(HomePageCourseItem(result.data!));
+      }else{
+        print(result.code);
+      }
+    }else{
+      print("User has already logged out");
+    }
   }
 }
