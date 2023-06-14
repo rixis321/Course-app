@@ -109,7 +109,7 @@ Widget goBuyButton(String name){
   );
 }
 
-Widget courseSummary(){
+Widget courseSummaryTitle(){
   return reusableText("The Course Includes", fontSize: 14.sp);
 }
 
@@ -119,7 +119,7 @@ var imagesInfo =<String,String>{
   "67 Downloadable Resources":"download_detail.png",
 };
 
-Widget buildListView(BuildContext context){
+Widget courseSummaryView(BuildContext context){
   return Column(
     children: [
       ...List.generate(imagesInfo.length, (index) =>  GestureDetector(
@@ -154,4 +154,89 @@ Widget buildListView(BuildContext context){
       ),)
     ],
   );
+}
+
+Widget courseLessonList(){
+  return Container(
+    width: 325.w,
+    height: 80.h,
+    padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+    decoration: BoxDecoration(
+      color: const Color.fromRGBO(255, 255, 255, 1),
+      borderRadius: BorderRadius.circular(10.w),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.1),
+          spreadRadius: 2,
+          blurRadius: 3,
+          offset: const Offset(0,1),
+        )
+      ]
+    ),
+    child: InkWell(
+      onTap: (){},
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //dsads
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 60.w,
+                height: 60.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15.h),
+                  image: const DecorationImage(
+                    fit: BoxFit.fill ,
+                    image: AssetImage(
+                      "assets/icons/Image(1).png"
+                    )
+                  )
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _listContainer(),
+                  _listContainer(
+                      fontSize: 10,
+                      color: AppColors.primaryThreeElementText,
+                      fontWeight: FontWeight.normal
+                  )
+                ],
+              )
+            ],
+
+          ),
+          Container(
+            child: Image(
+              height: 24.h,
+              width: 24.h,
+              image: AssetImage("assets/icons/arrow_right.png"),
+            ),
+          )
+        ],
+      ),
+    ),
+  );
+}
+
+Widget _listContainer({double fontSize = 13, Color color = AppColors.primaryText, fontWeight=FontWeight.bold}){
+
+    return Container(
+      width: 200.w,
+      margin: EdgeInsets.only(left: 6.w),
+      child: Text(
+        "UI Design",
+        overflow: TextOverflow.clip,
+        maxLines: 1,
+        style: TextStyle(
+            color: color,
+            fontSize: fontSize.sp,
+            fontWeight: FontWeight.bold
+        ),
+      ),
+    );
+
 }
