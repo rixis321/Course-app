@@ -1,5 +1,6 @@
 import 'package:course_app/common/apis/course_api.dart';
 import 'package:course_app/common/entities/course.dart';
+import 'package:course_app/common/routes/names.dart';
 import 'package:course_app/common/widgets/flutter_toast.dart';
 import 'package:course_app/pages/course/course_detail/bloc/course_detail_blocs.dart';
 import 'package:course_app/pages/course/course_detail/bloc/course_detail_events.dart';
@@ -52,7 +53,11 @@ class CourseDetailController{
     if(result.code == 200){
       //cleaner format of url
       var url = Uri.decodeFull(result.data!);
-      print("my returned stripe url is $url--------------------");
+      await Navigator.of(context).pushNamed(AppRoutes.PAY_WEB_VIEW, arguments: {
+        "url": url
+      });
+
+      print("my returned stripe url is $url");
     }else{
       print("-------------FAILED PAYMENTS---------");
     }
