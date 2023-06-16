@@ -1,5 +1,6 @@
-import 'package:course_app/pages/course/bloc/course_detail_events.dart';
-import 'package:course_app/pages/course/bloc/course_detail_states.dart';
+
+import 'package:course_app/pages/course/course_detail/bloc/course_detail_events.dart';
+import 'package:course_app/pages/course/course_detail/bloc/course_detail_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CourseDetailBloc extends Bloc<CourseDetailEvents, CourseDetailStates>{

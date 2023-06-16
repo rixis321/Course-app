@@ -44,10 +44,10 @@ class CourseController extends Controller
                    'description',
                    'lesson_num',
                    'video_length',
-                   'lesson_num',
-                   'price'
+                   'price',
+                   'downloadable_res'
                     )
-                ->get();
+                ->first();
 
                     return response()->json([
                                    'code' => 200,

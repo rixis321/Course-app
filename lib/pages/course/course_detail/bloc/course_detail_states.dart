@@ -1,4 +1,5 @@
-import '../../../common/entities/course.dart';
+import 'package:course_app/common/entities/course.dart';
+
 
 class CourseDetailStates{
   const CourseDetailStates({this.courseItem});

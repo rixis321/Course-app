@@ -1,4 +1,5 @@
-import '../../../common/entities/course.dart';
+import 'package:course_app/common/entities/course.dart';
+
 
 abstract class CourseDetailEvents{
   const CourseDetailEvents();
