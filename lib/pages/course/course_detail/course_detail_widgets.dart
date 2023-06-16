@@ -6,11 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../common/values/colors.dart';
 
-AppBar buildAppBar(){
-  return AppBar(
-    title: reusableText("Course detail"),
-  );
-}
+
 
 Widget thumbNail(String thumbnail){
   return Container(

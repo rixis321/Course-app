@@ -1,5 +1,6 @@
 import 'package:course_app/common/values/colors.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Widget reusableText(String text,
@@ -13,5 +14,11 @@ Widget reusableText(String text,
       fontWeight: fontWeight,
       fontSize: fontSize.sp,
     ),
+  );
+}
+
+AppBar buildAppBar(String url){
+  return AppBar(
+    title: reusableText(url),
   );
 }

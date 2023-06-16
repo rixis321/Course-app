@@ -37,7 +37,7 @@ class _CourseDetailState extends State<CourseDetail> {
   Widget build(BuildContext context) {
     return BlocBuilder<CourseDetailBloc,CourseDetailStates>(
         builder: (context,state){
-          return state.courseItem==null?Center(
+          return state.courseItem==null?const Center(
             child: CircularProgressIndicator(
               backgroundColor: Colors.blue,
             ),
@@ -46,7 +46,7 @@ class _CourseDetailState extends State<CourseDetail> {
             child: SafeArea(
               child: Scaffold(
                 backgroundColor: Colors.white,
-                appBar: buildAppBar(),
+                appBar: buildAppBar("Course detail"),
                 body: SingleChildScrollView(
                   child: Column(
                     children: [
