@@ -53,13 +53,15 @@ class CourseDetailController{
     if(result.code == 200){
       //cleaner format of url
       var url = Uri.decodeFull(result.data!);
-      await Navigator.of(context).pushNamed(AppRoutes.PAY_WEB_VIEW, arguments: {
+      var res = await Navigator.of(context).pushNamed(AppRoutes.PAY_WEB_VIEW, arguments: {
         "url": url
       });
-
-      print("my returned stripe url is $url");
+      if(res=="success"){
+        toastInfo(msg: result.msg!);
+      }
+     // print("my returned stripe url is $url");
     }else{
-      print("-------------FAILED PAYMENTS---------");
+      toastInfo(msg: result.msg!);
     }
   }
 }

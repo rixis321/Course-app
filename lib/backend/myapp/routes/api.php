@@ -23,6 +23,7 @@ Route::group(['namespace'=>'Api'], function(){
         Route::any('/courseDetail','CourseController@courseDetail');
         Route::any('/checkout','PayController@checkout');
     });
+    Route::any('/web_go_hooks','PayController@web_go_hooks');
 
 });
 

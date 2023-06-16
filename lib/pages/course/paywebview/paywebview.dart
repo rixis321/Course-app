@@ -31,6 +31,12 @@ class _PayWebViewState extends State<PayWebView> {
   }
 
   @override
+  void dispose(){
+    webViewController.clearCache();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<PayWebViewBlocs, PayWebViewStates>(
         builder: (context, state) {
@@ -45,9 +51,13 @@ class _PayWebViewState extends State<PayWebView> {
                 onMessageReceived: (
                     JavascriptMessage message){
                     print(message.message);
+                    Navigator.of(context).pop(message.message);
                     }
                 )
 
+          },
+          onWebViewCreated: (WebViewController w){
+            webViewController = w;
           },
         ),
       );
