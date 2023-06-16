@@ -63,7 +63,12 @@ class _CourseDetailState extends State<CourseDetail> {
                             SizedBox(height: 15.h,),
                             descriptionText(state.courseItem!.description!.toString()),
                             SizedBox(height: 20.h,),
-                            goBuyButton("Go Buy"),
+                            GestureDetector(
+                              onTap: (){
+                                _courseDetailController.goBuy(state.courseItem!.id);
+                              },
+                              child: goBuyButton("Go Buy"),
+                            ),
                             SizedBox(height: 20.h,),
                             courseSummaryTitle(),
                             courseSummaryView(context,state),

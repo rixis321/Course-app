@@ -1,3 +1,4 @@
+import 'package:course_app/common/entities/base.dart';
 import 'package:course_app/common/entities/course.dart';
 import 'package:course_app/common/utils/http_util.dart';
 
@@ -17,5 +18,14 @@ class CourseAPI{
     );
    // print(response.toString());
     return CourseDetailResponseEntity.fromJson(response);
+  }
+
+  // course payment
+  static Future<BaseResponseEntity> coursePay({CourseRequestEntity? params}) async {
+   var response = await HttpUtil().post("api/checkout",
+    queryParameters: params?.toJson(),
+
+    );
+    return BaseResponseEntity.fromJson(response);
   }
 }

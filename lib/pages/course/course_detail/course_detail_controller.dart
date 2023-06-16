@@ -4,7 +4,9 @@ import 'package:course_app/common/widgets/flutter_toast.dart';
 import 'package:course_app/pages/course/course_detail/bloc/course_detail_blocs.dart';
 import 'package:course_app/pages/course/course_detail/bloc/course_detail_events.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class CourseDetailController{
   final BuildContext context;
@@ -34,5 +36,25 @@ class CourseDetailController{
       print("-----------------------Error code ${result.code}-----------------------");
     }
 
+  }
+
+  Future<void> goBuy(int? id) async {
+    EasyLoading.show(
+      indicator: CircularProgressIndicator(),
+      maskType: EasyLoadingMaskType.clear,
+      dismissOnTap: true
+    );
+    CourseRequestEntity courseRequestEntity = CourseRequestEntity();
+    courseRequestEntity.id =id;
+    var result = await CourseAPI.coursePay(params: courseRequestEntity);
+
+    EasyLoading.dismiss();
+    if(result.code == 200){
+      //cleaner format of url
+      var url = Uri.decodeFull(result.data!);
+      print("my returned stripe url is $url--------------------");
+    }else{
+      print("-------------FAILED PAYMENTS---------");
+    }
   }
 }
