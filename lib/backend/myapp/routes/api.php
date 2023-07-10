@@ -20,7 +20,10 @@ Route::group(['namespace'=>'Api'], function(){
     Route::post('/login', 'UserController@createUser');
     Route::group(['middleware'=>['auth:sanctum']], function(){
         Route::any('/courseList', 'CourseController@courseList');
+        Route::any('/courseDetail','CourseController@courseDetail');
+        Route::any('/checkout','PayController@checkout');
     });
+    Route::any('/web_go_hooks','PayController@web_go_hooks');
 
 });
 

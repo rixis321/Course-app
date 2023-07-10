@@ -102,6 +102,7 @@ class SignInController {
      try{
        Global.storageService.setString(AppConstants.STORAGE_USER_PROFILE_KEY, jsonEncode(result.data!));
        //used for authorization
+       print("TOKEN TOOOO ${result.data!.access_token!}");
        Global.storageService.setString(AppConstants.STORAGE_USER_TOKEN_KEY,result.data!.access_token!);
        EasyLoading.dismiss();
 

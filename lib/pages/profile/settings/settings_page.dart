@@ -1,5 +1,6 @@
 import 'package:course_app/common/routes/routes.dart';
 import 'package:course_app/common/values/constant.dart';
+import 'package:course_app/common/widgets/base_text_widget.dart';
 import 'package:course_app/global.dart';
 import 'package:course_app/pages/application/bloc/app_blocs.dart';
 import 'package:course_app/pages/application/bloc/app_events.dart';
@@ -33,7 +34,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: buildAppBar(),
+      appBar: buildAppBar("Settings"),
       body: SingleChildScrollView(
         child: BlocBuilder<SettingsBlocs,SettingStates>(
            builder: (context,state){
