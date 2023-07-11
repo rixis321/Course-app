@@ -13,7 +13,7 @@ class HomeController extends Controller
     }
     //stripe web hook needs this
     public function success(){
-    return View("success"));
+    return View("success");
     }
     //stripe web hook needs this
     public function cancel(){
