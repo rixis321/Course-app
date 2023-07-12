@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Stripe\Webhook;
@@ -11,66 +12,65 @@ use Stripe\Stripe;
 use Stripe\Checkout\Session;
 use Stripe\Exception\UnexpectedValueException;
 use Stripe\Exception\SignatureVerificationException;
+use Illuminate\Support\Carbon;
 use App\Models\Course;
 use App\Models\Order;
-use Illuminate\Support\Carbon;
 
 class PayController extends Controller
 {
     //
-    public function checkout(Request $request)
-    {
-        try {
+    public function checkout(Request $request){
+     try{
             $user = $request->user();
             $token = $user->token;
-            $courseId = $request->id;
+            $courseId= $request->id;
 
-            //Stripe key
+            /*
+                Stripe api key
+            */
             Stripe::setApiKey('sk_test_51NJQ3kFCdQOCeuE3JWG5dgiRkLiuij0GjJLQ0EBm8Nl8ACTv0drXcWoSYXlKDmrOXdu4zGwRxvs1vQlxapbCXtU100buJegFas');
 
 
             $courseResult = Course::where('id', '=', $courseId)->first();
-
             //invalid request
-            if (empty($courseResult)) {
+            if(empty($courseResult)){
                 return response()->json([
                     'code' => 400,
                     'msg' => "Course does not exist",
-                    'data' => ''
+                    'data'=>''
                 ], 400);
             }
 
             $orderMap = [];
 
-            $orderMap['course_id'] = $courseId;
-            $orderMap['user_token'] = $token;
+            $orderMap['course_id']= $courseId;
+            $orderMap['user_token']=$token;
             $orderMap['status'] = 1;
 
-            //essa
-
-            // check if the order has been placed before or not
+            /*
+                if the order has been placed before or not
+                So we need Order model/table
+            */
 
             $orderRes = Order::where($orderMap)->first();
-
-            if (!empty($orderRes)) {
+            if(!empty($orderRes)){
                 return response()->json([
                     'code' => 400,
                     'msg' => "You already bought this course",
                     'data' => ""
-                ]);
+                ],);
             }
-
-            // new order for the user
+            //new order for the user and let's submit
             $YOUR_DOMAIN = env('APP_URL');
             $map = [];
             $map['user_token'] = $token;
             $map['course_id'] = $courseId;
             $map['total_amount'] = $courseResult->price;
-            $map['status'] = 0;
+            $map['status'] = 1;
             $map['created_at'] = Carbon::now();
             $orderNum = Order::insertGetId($map);
+            //create payment session
 
-            //creating payment session
             $checkOutSession = Session::create(
                 [
                     'line_items'=>[[
@@ -79,89 +79,83 @@ class PayController extends Controller
                             'product_data'=>[
                                 'name'=>$courseResult->name,
                                 'description'=>$courseResult->description,
-
                             ],
                             'unit_amount'=>intval(($courseResult->price)*100),
-
                         ],
                         'quantity'=>1,
-
                     ]],
                     'payment_intent_data'=>[
-                        'metadata'=>[
-                            'order_num'=>$orderNum,
-                            'user_token'=>$token
-                        ],
+                        'metadata'=>['order_num'=>$orderNum, 'user_token'=>$token],
                     ],
-                    'metadata'=>[
-                        'order_num'=>$orderNum,
-                        'user_token'=>$token
-                    ],
+                    'metadata' => ['order_num' => $orderNum, 'user_token' => $token],
                     'mode'=>'payment',
                     'success_url'=> $YOUR_DOMAIN . 'success',
                     'cancel_url'=> $YOUR_DOMAIN . 'cancel'
                 ]
-                        );
+            );
 
-            // returning stripe payments url
+            //returning stripe payment url
             return response()->json([
                 'code' => 200,
-                'msg' => "Success",
-                'data' => $checkOutSession->url
+                'msg' => "success",
+                'data'=>$checkOutSession->url
             ], 200);
-        } catch (\Throwable $th) {
+     }catch(\Throwable $th){
+
+
             return response()->json([
                 'error' => $th->getMessage(),
             ], 500);
-        }
+     }
     }
 
-       public function web_go_hooks()
-        {
-           // Log::info("11211-------");
-            Stripe::setApiKey('sk_test_51NJQ3kFCdQOCeuE3JWG5dgiRkLiuij0GjJLQ0EBm8Nl8ACTv0drXcWoSYXlKDmrOXdu4zGwRxvs1vQlxapbCXtU100buJegFas');
-            $endpoint_secret = 'whsec_54xW0cxdQAZ466Bww6xtTyr5tsx9wChr';
-            $payload = @file_get_contents('php://input');
-            $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
-            $event = null;
-          //  Log::info("payload----" . $payload);
 
-            try {
-                $event = \Stripe\Webhook::constructEvent(
-                    $payload,
-                    $sig_header,
-                    $endpoint_secret
-                );
-            } catch (\UnexpectedValueException $e) {
-                // Invalid payload
-              //  Log::info("UnexpectedValueException" . $e);
-                http_response_code(400);
-                exit();
-            } catch (\Stripe\Exception\SignatureVerificationException $e) {
-                // Invalid signature
-            //    Log::info("SignatureVerificationException" . $e);
-                http_response_code(400);
-                exit();
-            }
-         //   Log::info("event---->" . $event);
-            // Handle the checkout.session.completed event
-            if ($event->type == 'checkout.session.completed') {
-                $session = $event->data->object;
-               // Log::info("event->data->object---->" . $session);
-                $metadata = $session["metadata"];
-                $order_num = $metadata->order_num;
-                $user_token = $metadata->user_token;
-              //  Log::info("order_id---->" . $order_num);
-                $map = [];
-                $map["status"] = 1;
-                $map["updated_at"] = Carbon::now();
-                $whereMap = [];
-                $whereMap["user_token"] = $user_token;
-                $whereMap["id"] = $order_num;
-                Order::where($whereMap)->update($map);
-            }
+    public function web_go_hooks()
+    {
+        Log::info("11211-------");
+        Stripe::setApiKey('sk_test_51NJQ3kFCdQOCeuE3JWG5dgiRkLiuij0GjJLQ0EBm8Nl8ACTv0drXcWoSYXlKDmrOXdu4zGwRxvs1vQlxapbCXtU100buJegFas');
+        $endpoint_secret = 'whsec_54xW0cxdQAZ466Bww6xtTyr5tsx9wChr';
+        $payload = @file_get_contents('php://input');
+        $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
+        $event = null;
+        Log::info("payload----" . $payload);
 
-
-            http_response_code(200);
+        try {
+            $event = \Stripe\Webhook::constructEvent(
+                $payload,
+                $sig_header,
+                $endpoint_secret
+            );
+        } catch (\UnexpectedValueException $e) {
+            // Invalid payload
+          //  Log::info("UnexpectedValueException" . $e);
+            http_response_code(400);
+            exit();
+        } catch (\Stripe\Exception\SignatureVerificationException $e) {
+            // Invalid signature
+            Log::info("SignatureVerificationException" . $e);
+            http_response_code(400);
+            exit();
         }
+        Log::info("event---->" . $event);
+        // Handle the checkout.session.completed event
+        if ($event->type == 'charge.succeeded') {
+            $session = $event->data->object;
+           // Log::info("event->data->object---->" . $session);
+            $metadata = $session["metadata"];
+            $order_num = $metadata->order_num;
+            $user_token = $metadata->user_token;
+            Log::info("order_id---->" . $order_num);
+            $map = [];
+            $map["status"] = 0;
+            $map["updated_at"] = Carbon::now();
+            $whereMap = [];
+            $whereMap["user_token"] = $user_token;
+            $whereMap["id"] = $order_num;
+            Order::where($whereMap)->update($map);
+        }
+
+        http_response_code(200);
+    }
+
 }
