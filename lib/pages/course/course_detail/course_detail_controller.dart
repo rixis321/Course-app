@@ -37,7 +37,7 @@ class CourseDetailController{
 
 
     }else{
-      toastInfo(msg: "Something went wrong");
+      toastInfo(msg: "Something went wrong and check the log in the laravel.log");
       print("-----------------------Error code ${result.code}-----------------------");
     }
   }
@@ -46,7 +46,18 @@ class CourseDetailController{
     LessonRequestEntity lessonRequestEntity = LessonRequestEntity();
     lessonRequestEntity.id = id;
     var result = await LessonAPI.lessonList(params:lessonRequestEntity);
-    print('---------my lesson data ${result.data?.length.toString()}---------');
+   // print('---------my lesson data ${result.data?.length.toString()}---------');
+    if(result.code == 200){
+      if(context.mounted){
+        context.read<CourseDetailBloc>().add(TriggerLessonList(result.data!));
+        print('my lesson data is ${result.data![0].name}');
+      }else{
+        print('context is not read -----');
+      }
+    }else{
+      toastInfo(msg: result.msg??"Something went wrong check the log");
+    }
+
   }
 
   Future<void> goBuy(int? id) async {
