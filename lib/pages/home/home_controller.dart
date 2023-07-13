@@ -28,11 +28,14 @@ class HomeController{
       print("the result is ${result.data![0]}");
       if(result.code==200){
         context.read<HomePageBlocs>().add(HomePageCourseItem(result.data!));
+        return;
       }else{
         print(result.code);
+        return;
       }
     }else{
       print("User has already logged out");
     }
+    return;
   }
 }

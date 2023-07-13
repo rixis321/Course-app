@@ -110,8 +110,6 @@ class PayController extends Controller
     }
 
 
-
-
     public function web_go_hooks()
     {
         Log::info("11211-------");
@@ -156,7 +154,6 @@ class PayController extends Controller
             $whereMap["id"] = $order_num;
             Order::where($whereMap)->update($map);
         }
-
 
         http_response_code(200);
     }

@@ -4,6 +4,8 @@ import 'package:course_app/pages/application/application_page.dart';
 import 'package:course_app/pages/application/bloc/app_blocs.dart';
 import 'package:course_app/pages/course/bloc/course_blocs.dart';
 import 'package:course_app/pages/course/course_detail/bloc/course_detail_blocs.dart';
+import 'package:course_app/pages/course/lesson/bloc/lesson_blocs.dart';
+import 'package:course_app/pages/course/lesson/lesson_detail.dart';
 import 'package:course_app/pages/course/paywebview/bloc/payview_blocs.dart';
 import 'package:course_app/pages/course/paywebview/paywebview.dart';
 import 'package:course_app/pages/home/bloc/home_page_blocs.dart';
@@ -61,6 +63,11 @@ class AppPages {
           route: AppRoutes.COURSE_DETAIL,
           page: const CourseDetail(),
           bloc: BlocProvider(create: (_)=> CourseDetailBloc(),)
+      ),
+      PageEntity(
+          route: AppRoutes.LESSON_DETAIL,
+          page: const LessonDetail(),
+          bloc: BlocProvider(create: (_)=> LessonBlocs(),)
       ),
       PageEntity(
           route: AppRoutes.PAY_WEB_VIEW,
