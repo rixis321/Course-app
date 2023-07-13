@@ -4,6 +4,7 @@ import 'package:course_app/pages/course/course_detail/bloc/course_detail_states.
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../common/routes/names.dart';
 import '../../../common/values/colors.dart';
 
 
@@ -178,7 +179,11 @@ Widget courseLessonList(CourseDetailStates state){
             ]
         ),
         child: InkWell(
-          onTap: (){},
+          onTap: (){
+            Navigator.of(context).pushNamed(AppRoutes.LESSON_DETAIL, arguments: {
+              "id":state.lessonItem[index].id
+            });
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             //dsads
