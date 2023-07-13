@@ -15,6 +15,7 @@ class LessonControler{
 
   void init() async{
     final args = ModalRoute.of(context)!.settings.arguments as Map;
+    //set the earlier video to false - stop playing
     context.read<LessonBlocs>().add(TriggerPlay(false));
     asyncLoadLessonData(args["id"]);
   }
@@ -28,12 +29,30 @@ class LessonControler{
         context.read<LessonBlocs>().add(TriggerLessonVideo(result.data!));
         if(result.data!.isNotEmpty){
           var url = result.data!.elementAt(0).url;
+          //this url is important for init video player
           videoPlayerController = VideoPlayerController.network(url!);
+          //here stream starts to happen
           var initPlayer = videoPlayerController?.initialize();
           context.read<LessonBlocs>().add(TriggerUrlItem(initPlayer));
         }
       }
     }
+  }
+
+  void playVideo(String url){
+    if(videoPlayerController!=null){
+      videoPlayerController?.pause();
+      videoPlayerController?.dispose();
+    }
+    videoPlayerController = VideoPlayerController.network(url);
+    context.read<LessonBlocs>().add(TriggerPlay(false));
+    context.read<LessonBlocs>().add(TriggerUrlItem(null));
+    var initPlayer = 
+        videoPlayerController?.initialize().then((value){
+          videoPlayerController?.seekTo(const Duration(microseconds: 0));
+        });
+    context.read<LessonBlocs>().add(TriggerUrlItem(initPlayer));
+    context.read<LessonBlocs>().add(const TriggerPlay(true));
   }
 
 }

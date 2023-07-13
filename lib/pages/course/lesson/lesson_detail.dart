@@ -54,46 +54,74 @@ class _LessonDetailState extends State<LessonDetail> {
                   horizontal: 25.w
                 ),
                   sliver: SliverToBoxAdapter(
-                    child: Container(
-                      child: Column(
-                        children: [
-                          Container(
-                            width: 325.w,
-                            height: 200.h,
-                            decoration: BoxDecoration(
-                              image: const DecorationImage(
-                                image: AssetImage(
-                                  "assets/icons/video.png"
-                                ),
-                                fit: BoxFit.fitWidth
+                    child: Column(
+                      children: [
+                        //video preview
+                        Container(
+                          width: 325.w,
+                          height: 200.h,
+                          decoration: BoxDecoration(
+                            image: const DecorationImage(
+                              image: AssetImage(
+                                "assets/icons/video.png"
                               ),
-                              borderRadius: BorderRadius.circular(20.h)
+                              fit: BoxFit.fitWidth
                             ),
-                            child: FutureBuilder(
-                              future: state.initializeVideoPlayerFuture,
-                              builder: (context, snapshot){
-                                if(snapshot.connectionState==ConnectionState.done){
-                                  return _lessonControler.videoPlayerController==null?Container():AspectRatio(
-                                    aspectRatio: _lessonControler.videoPlayerController!.value.aspectRatio,
-                                    child: Stack(
-                                      alignment: Alignment.bottomCenter,
-                                      children: [
-                                        VideoPlayer(_lessonControler.videoPlayerController!),
-                                        VideoProgressIndicator(_lessonControler.videoPlayerController!, allowScrubbing: true,
-                                        colors: VideoProgressColors(playedColor: AppColors.primaryElement),)
-                                      ],
-                                    ),
-                                  );
-                                }else{
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                }
-                              },
-                            ),
-                          )
-                        ],
-                      ),
+                            borderRadius: BorderRadius.circular(20.h)
+                          ),
+                          child: FutureBuilder(
+                            future: state.initializeVideoPlayerFuture,
+                            builder: (context, snapshot){
+                            //check if the connection is mde to the certain video on server
+                              if(snapshot.connectionState==ConnectionState.done){
+                                return _lessonControler.videoPlayerController==null?Container():AspectRatio(
+                                  aspectRatio: _lessonControler.videoPlayerController!.value.aspectRatio,
+                                  child: Stack(
+                                    alignment: Alignment.bottomCenter,
+                                    children: [
+                                      VideoPlayer(_lessonControler.videoPlayerController!),
+                                      VideoProgressIndicator(_lessonControler.videoPlayerController!, allowScrubbing: true,
+                                      colors: VideoProgressColors(playedColor: AppColors.primaryElement),)
+                                    ],
+                                  ),
+                                );
+                              }else{
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                        //video buttons
+                        Container(
+                          child: Row(
+                            children: [
+                              GestureDetector(
+                                onTap: (){
+                                  //if its already playing
+                                  if(state.isPlay){
+                                    _lessonControler.videoPlayerController?.pause();
+                                    context.read<LessonBlocs>().add(const TriggerPlay(false));
+                                  }else{
+                                    _lessonControler.videoPlayerController?.play();
+                                    context.read<LessonBlocs>().add(const TriggerPlay(true));
+                                  }
+                                },
+                                child: state.isPlay?Container(
+                                  width: 24.w,
+                                  height: 24.w,
+                                  child: Image.asset("assets/icons/pause.png"),
+                                ):Container(
+                                  width: 24.w,
+                                  height: 24.w,
+                                  child: Image.asset("assets/icons/play-circle.png"),
+                                )
+                              )
+                            ],
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 )
