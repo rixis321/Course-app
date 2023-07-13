@@ -47,6 +47,7 @@ dependencies:
   dio: ^5.2.0+1
   webview_flutter: ^3.0.1
   video_player: ^2.7.0
+  equatable: ^2.0.5
 
 dev_dependencies:
   flutter_test:

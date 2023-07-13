@@ -53,6 +53,7 @@ class LessonControler{
         });
     context.read<LessonBlocs>().add(TriggerUrlItem(initPlayer));
     context.read<LessonBlocs>().add(const TriggerPlay(true));
+    videoPlayerController?.play();
   }
 
 }
