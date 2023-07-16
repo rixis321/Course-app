@@ -36,8 +36,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: buildAppBar(userProfile.avatar.toString()),
+      backgroundColor: Colors.grey,
+      appBar: buildAppBar(userProfile.avatar.toString(), context),
       body: RefreshIndicator(
         onRefresh: (){
           return HomeController(context: context).init();

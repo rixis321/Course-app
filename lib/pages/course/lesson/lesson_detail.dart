@@ -51,9 +51,9 @@ class _LessonDetailState extends State<LessonDetail> {
       print('my future is ${state.initializeVideoPlayerFuture}');
       return SafeArea(
         child: Container(
-            color: Colors.white,
+            color: Colors.grey,
             child: Scaffold(
-                backgroundColor: Colors.white,
+                backgroundColor: Colors.grey,
                 appBar: buildAppBar("Lesson detail"),
                 body: CustomScrollView(
                   slivers: [

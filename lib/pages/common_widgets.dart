@@ -25,14 +25,10 @@ AppBar buildAppBar(String type) {
 
 Widget buildThirdPartyLogin(BuildContext context) {
   return Container(
-      margin: EdgeInsets.only(top: 40.h, bottom: 20.h),
-      padding: EdgeInsets.only(left: 50.w,right: 50.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _reusableIcons("google"),
-          _reusableIcons("apple"),
-          _reusableIcons("facebook")
+          _reusableIcons("fajne"),
         ],
       ));
 }
@@ -41,8 +37,8 @@ Widget _reusableIcons(String iconName) {
   return GestureDetector(
     onTap: () {},
     child: Container(
-      width: 40.w,
-      height: 40.w,
+      width: 200.w,
+      height: 200.w,
       child: Image.asset("assets/icons/$iconName.png"),
     ),
   );
@@ -68,7 +64,7 @@ Widget buildTextField(String hintText, String textType, String iconName,
   return Container(
     width: 325.h,
     height: 50.h,
-    margin: EdgeInsets.only(bottom: 20.h),
+    margin: EdgeInsets.only(bottom: 2.h),
     decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(15.w)),

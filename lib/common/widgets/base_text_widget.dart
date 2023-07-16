@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Widget reusableText(String text,
-    {Color color = AppColors.primaryText,
+    {Color color = Colors.teal,
       double fontSize = 16,
       FontWeight fontWeight = FontWeight.bold}) {
   return Text(

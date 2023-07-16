@@ -21,11 +21,11 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return BlocBuilder<RegisterBlocs, RegisterStates>(builder: (context, state){
       return Container(
-        color: Colors.white,
+        color: Colors.grey,
         child: SafeArea(
           child: Scaffold(
-            backgroundColor: Colors.white,
-            appBar:buildAppBar("Sign Up"),
+            backgroundColor: Colors.grey,
+            appBar:buildAppBar("Sign Up            "),
             body: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

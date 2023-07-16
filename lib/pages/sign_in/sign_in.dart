@@ -25,10 +25,10 @@ class _SignInState extends State<SignIn> {
     return BlocBuilder<SignInBloc, SignInState>(
         builder: (context, state){
           return Container(
-            color: Colors.white,
+            color: Colors.grey,
             child: SafeArea(
               child: Scaffold(
-                backgroundColor: Colors.white,
+                backgroundColor: Colors.grey,
                 appBar:buildAppBar("Log In"),
                 body: SingleChildScrollView(
                   child: Column(
