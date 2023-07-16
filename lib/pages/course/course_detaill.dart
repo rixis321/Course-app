@@ -39,13 +39,13 @@ class _CourseDetailState extends State<CourseDetail> {
         builder: (context,state){
           return state.courseItem==null?const Center(
             child: CircularProgressIndicator(
-              backgroundColor: Colors.blue,
+              backgroundColor: Colors.green,
             ),
           ):Container(
-            color: Colors.white,
+            color: Colors.grey,
             child: SafeArea(
               child: Scaffold(
-                backgroundColor: Colors.white,
+                backgroundColor: Colors.white10,
                 appBar: buildAppBar("Course detail"),
                 body: SingleChildScrollView(
                   child: Column(

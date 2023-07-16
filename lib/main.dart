@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
               appBarTheme: const AppBarTheme(
                   iconTheme: IconThemeData(color: AppColors.primaryText),
                   elevation: 0,
-                  backgroundColor: Colors.white)),
+                  backgroundColor: Colors.grey)),
           onGenerateRoute: AppPages.GenerateRouteSettings,
           routes: {
             "signIn": (context) => const SignIn(),

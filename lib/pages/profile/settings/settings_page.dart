@@ -33,7 +33,7 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey,
       appBar: buildAppBar("Settings"),
       body: SingleChildScrollView(
         child: BlocBuilder<SettingsBlocs,SettingStates>(

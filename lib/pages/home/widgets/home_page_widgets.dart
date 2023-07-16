@@ -11,7 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../common/entities/course.dart';
 
-AppBar buildAppBar(String avatar) {
+AppBar buildAppBar(String avatar, BuildContext context) {
   return AppBar(
     title: Container(
       margin: EdgeInsets.only(left: 7.w, right: 7.w),
@@ -19,10 +19,15 @@ AppBar buildAppBar(String avatar) {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            width: 15.w,
-            height: 12.w,
-            child: Image.asset("assets/icons/menu.png"),
+          GestureDetector(
+            onTap: (){
+              Navigator.of(context).pushNamed("/settings");
+            },
+            child: SizedBox(
+              width: 25.w,
+              height: 23.w,
+              child: Image.asset("assets/icons/settings.png"),
+            ),
           ),
           GestureDetector(
             child: Container(
@@ -87,7 +92,7 @@ Widget searchView() {
                   focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.transparent)),
                   hintStyle:
-                      TextStyle(color: AppColors.primarySecondaryElementText),
+                      TextStyle(color: Colors.grey),
                 ),
                 style: TextStyle(
                     color: AppColors.primaryText,
@@ -130,9 +135,9 @@ Widget slidersView(BuildContext context, HomePageStates state) {
             context.read<HomePageBlocs>().add(HomePageDots(value));
           },
           children: [
-            _slidersContainer(path: "assets/icons/Art.png"),
-            _slidersContainer(path: "assets/icons/Image(1).png"),
-            _slidersContainer(path: "assets/icons/Image(2).png"),
+            _slidersContainer(path: "assets/images/sale_1.png"),
+            _slidersContainer(path: "assets/images/zmitac.png"),
+            _slidersContainer(path: "assets/images/polsl.png"),
           ],
         ),
       ),
@@ -179,7 +184,7 @@ Widget menuView() {
               reusableText("Choose your course"),
               GestureDetector(
                   child: reusableText("See all",
-                      color: AppColors.primaryThreeElementText, fontSize: 10)),
+                      color: Color.fromARGB(255, 16, 91, 94), fontSize: 10)),
             ],
           )),
       Container(
@@ -189,10 +194,10 @@ Widget menuView() {
             _reusableMenuText("All"),
             _reusableMenuText("Popular",
                 textColor: AppColors.primaryThreeElementText,
-                backgroundColor: Colors.white),
+                backgroundColor: Colors.grey),
             _reusableMenuText("Newest",
                 textColor: AppColors.primaryThreeElementText,
-                backgroundColor: Colors.white),
+                backgroundColor: Colors.grey),
           ],
         ),
       )
@@ -239,7 +244,7 @@ Widget courseGrid(CourseItem item) {
           textAlign: TextAlign.left,
           softWrap: false,
           style: TextStyle(
-              color: AppColors.primaryElementText,
+              color: Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 11.sp),
         ),

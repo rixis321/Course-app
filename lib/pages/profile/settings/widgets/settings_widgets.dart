@@ -24,12 +24,13 @@ Widget settingsButton(BuildContext context, void Function()? func){
       });
     },
     child: Container(
+      margin: EdgeInsets.only(top: 200.0),
       height: 100.w,
       decoration: const BoxDecoration(
           image: DecorationImage(
               fit: BoxFit.fitHeight,
               image: AssetImage(
-                  "assets/icons/Logout.png"
+                  "assets/icons/logout_dow.png"
               )
           )
       ),
