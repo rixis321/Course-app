@@ -137,7 +137,7 @@ Widget courseSummaryView(BuildContext context,CourseDetailStates states){
                 ),
                 child: Image.asset("assets/icons/${imagesInfo.values.elementAt(index)}",
                   width: 30.w,
-                  height: 30.h,
+                  height: 30.h, // to są te niebieskie kamery
                 ),
               ),
               SizedBox(width: 15.w,),
@@ -156,18 +156,18 @@ Widget courseSummaryView(BuildContext context,CourseDetailStates states){
   );
 }
 
-Widget courseLessonList(CourseDetailStates state){
+Widget courseLessonList(CourseDetailStates state) {
   return SingleChildScrollView(
     child: ListView.builder(
       shrinkWrap: true,
-        itemCount: state.lessonItem.length,
-        itemBuilder: (context, index){
-      return Container(
-        margin: EdgeInsets.only(top: 10.h),
-        width: 325.w,
-        height: 80.h,
-        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-        decoration: BoxDecoration(
+      itemCount: state.lessonItem.length,
+      itemBuilder: (context, index) {
+        return Container(
+          margin: EdgeInsets.only(top: 10.h),
+          width: 325.w,
+          height: 80.h,
+          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+          decoration: BoxDecoration(
             color: const Color.fromRGBO(255, 255, 255, 1),
             borderRadius: BorderRadius.circular(10.w),
             boxShadow: [
@@ -175,63 +175,62 @@ Widget courseLessonList(CourseDetailStates state){
                 color: Colors.grey.withOpacity(0.1),
                 spreadRadius: 2,
                 blurRadius: 3,
-                offset: const Offset(0,1),
-              )
-            ]
-        ),
-        child: InkWell(
-          onTap: (){
-            Navigator.of(context).pushNamed(AppRoutes.LESSON_DETAIL, arguments: {
-              "id":state.lessonItem[index].id
-            });
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //dsads
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: 60.w,
-                    height: 60.h,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.h),
-                        image: DecorationImage(
-                            fit: BoxFit.fitHeight ,
-                            image: NetworkImage(
-                                state.lessonItem[index].thumbnail!
-                            )
-                        )
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _listContainer(state.lessonItem[index].name.toString()),
-                      _listContainer(
-                        state.lessonItem[index].description.toString(),
-                          fontSize: 10,
-                          color: AppColors.primaryThreeElementText,
-                          fontWeight: FontWeight.normal
-                      )
-                    ],
-                  )
-                ],
-
-              ),
-              Container(
-                child: Image(
-                  height: 24.h,
-                  width: 24.h,
-                  image: AssetImage("assets/icons/arrow_right.png"),
-                ),
+                offset: const Offset(0, 1),
               )
             ],
           ),
-        ),
-      );
-    }),
+          child: InkWell(
+            onTap: () {
+              Navigator.of(context).pushNamed(AppRoutes.LESSON_DETAIL, arguments: {
+                "id": state.lessonItem[index].id
+              });
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 60.w,
+                      height: 60.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.h),
+                      ),
+                      child: CachedNetworkImage(
+                        imageUrl: state.lessonItem[index].thumbnail!,
+                        fit: BoxFit.fitHeight,
+                        placeholder: (context, url) => CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _listContainer(state.lessonItem[index].name.toString()),
+                        _listContainer(
+                          state.lessonItem[index].description.toString(),
+                          fontSize: 10,
+                          color: AppColors.primaryThreeElementText,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Container(
+                  child: Image(
+                    height: 24.h,
+                    width: 24.h,
+                    image: AssetImage("assets/icons/arrow_right.png"),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    ),
   );
 }
 

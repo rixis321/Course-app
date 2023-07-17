@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:video_player/video_player.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../../../common/entities/lesson.dart';
 import '../../../../common/values/colors.dart';
@@ -182,31 +183,27 @@ SliverPadding videoList(LessonStates state, LessonControler lessonController){
     ),
   );
 }
-Widget _buildLessonItems(BuildContext context, int index, LessonVideoItem item, LessonControler lessonController){
+
+Widget _buildLessonItems(BuildContext context, int index, LessonVideoItem item, LessonControler lessonController) {
   return Container(
     width: 325.w,
     height: 80.h,
-    margin: EdgeInsets.only(
-        bottom: 20.h
-    ),
+    margin: EdgeInsets.only(bottom: 20.h),
     padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
     decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.w),
-        color: const Color.fromRGBO(255, 255, 255, 1),
-        //color: Colors.red,
-        boxShadow: [
-          BoxShadow(
-              color:Colors.grey.withOpacity(.5),
-              spreadRadius: 2,
-              blurRadius: 3,
-              offset: Offset(0, 1)
-          )
-        ]
-
+      borderRadius: BorderRadius.circular(10.w),
+      color: const Color.fromRGBO(255, 255, 255, 1),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(.5),
+          spreadRadius: 2,
+          blurRadius: 3,
+          offset: Offset(0, 1),
+        ),
+      ],
     ),
     child: InkWell(
-      onTap: (){
-        //videoIndex = index;
+      onTap: () {
         context.read<LessonBlocs>().add(TriggerVideoIndex(index));
         lessonController.playVideo(item.url!);
       },
@@ -221,42 +218,38 @@ Widget _buildLessonItems(BuildContext context, int index, LessonVideoItem item, 
                 width: 60.h,
                 height: 60.h,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.w),
-                    image: DecorationImage(
-                        fit: BoxFit.fitHeight,
-                        image: NetworkImage("${item.thumbnail}")
-                    )
+                  borderRadius: BorderRadius.circular(15.w),
+                ),
+                child: CachedNetworkImage(
+                  imageUrl: item.thumbnail!,
+                  fit: BoxFit.fitHeight,
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
               ),
               Container(
                 width: 210.h,
                 height: 60.h,
                 alignment: Alignment.centerLeft,
-
                 margin: EdgeInsets.only(left: 6.sp),
                 child: reusableText(
-                    "${item.name}",
-                    fontSize: 13.sp
+                  "${item.name}",
+                  fontSize: 13.sp,
                 ),
-              )
+              ),
             ],
           ),
-          Row(
-
-            children: [
-              GestureDetector(
-                onTap: (){
-                  context.read<LessonBlocs>().add(TriggerVideoIndex(index));
-                  lessonController.playVideo(item.url!);
-                },
-                child: Image.asset(
-                    width:24.w,
-                    height:24.w,
-                    "assets/icons/play-circle.png"
-                ),
-              )
-            ],
-          )
+          GestureDetector(
+            onTap: () {
+              context.read<LessonBlocs>().add(TriggerVideoIndex(index));
+              lessonController.playVideo(item.url!);
+            },
+            child: Image.asset(
+              "assets/icons/play-circle.png",
+              width: 24.w,
+              height: 24.w,
+            ),
+          ),
         ],
       ),
     ),
