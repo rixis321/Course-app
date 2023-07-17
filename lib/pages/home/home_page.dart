@@ -74,34 +74,57 @@ class _HomePageState extends State<HomePage> {
                   SliverToBoxAdapter(
                     child: menuView(),
                   ),
-                  SliverPadding(padding: EdgeInsets.symmetric(
+                  SliverPadding(
+                    padding: EdgeInsets.symmetric(
                       vertical: 18.h,
-                      horizontal: 0.w
-                  ),
-                    sliver:SliverGrid(
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,
-                          mainAxisSpacing: 15,
-                          crossAxisSpacing: 15,
-                          childAspectRatio: 1.6
-
-                      ),delegate: SliverChildBuilderDelegate(
+                      horizontal: 0.w,
+                    ),
+                    sliver: SliverGrid(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 15,
+                        crossAxisSpacing: 15,
+                        childAspectRatio: 1.0,
+                      ),
+                      delegate: SliverChildBuilderDelegate(
                         childCount: state.courseItem.length,
-                            (BuildContext context, int index){
+                            (BuildContext context, int index) {
                           return GestureDetector(
-                            onTap: (){
+                            onTap: () {
                               Navigator.of(context).pushNamed(
                                 AppRoutes.COURSE_DETAIL,
-                                arguments: {
-                                  "id":state.courseItem.elementAt(index).id
-                                }
+                                arguments: {"id": state.courseItem.elementAt(index).id},
                               );
                             },
-                            child: courseGrid(state.courseItem[index]),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(250.w), // Dodano borderRadius
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    blurRadius: 6.0,
+                                    offset: Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: ClipRRect( // Dodano ClipRRect
+                                borderRadius: BorderRadius.circular(250.w), // Dodano borderRadius
+                                child: AspectRatio(
+                                  aspectRatio: 1.0,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: courseGrid(state.courseItem[index]),
+                                  ),
+                                ),
+                              ),
+                            ),
                           );
-                        }
+                        },
+                      ),
                     ),
-                    ) ,
                   ),
+
+
 
                 ],
               ),

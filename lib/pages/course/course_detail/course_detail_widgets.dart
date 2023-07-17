@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:course_app/common/values/constant.dart';
 import 'package:course_app/common/widgets/base_text_widget.dart';
 import 'package:course_app/pages/course/course_detail/bloc/course_detail_states.dart';
@@ -9,15 +10,15 @@ import '../../../common/values/colors.dart';
 
 
 
-Widget thumbNail(String thumbnail){
+Widget thumbNail(String thumbnail) {
   return Container(
     width: 325.w,
     height: 200.h,
-    decoration: BoxDecoration(
-        image: DecorationImage(
-            fit: BoxFit.fitWidth,
-            image: NetworkImage("${AppConstants.SERVER_UPLOADS}$thumbnail")
-        )
+    child: CachedNetworkImage(
+      imageUrl: "${AppConstants.SERVER_UPLOADS}$thumbnail",
+      fit: BoxFit.fitWidth,
+      placeholder: (context, url) => CircularProgressIndicator(),
+      errorWidget: (context, url, error) => Icon(Icons.error),
     ),
   );
 }
