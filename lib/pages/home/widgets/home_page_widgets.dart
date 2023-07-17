@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:course_app/common/values/colors.dart';
 import 'package:course_app/common/values/constant.dart';
 import 'package:course_app/common/widgets/base_text_widget.dart';
@@ -222,46 +223,55 @@ Widget _reusableMenuText(String menuText,
   );
 }
 
-//course grid view UI
+
 Widget courseGrid(CourseItem item) {
   return Container(
     padding: EdgeInsets.all(12.w),
     decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15.w),
-        image:  DecorationImage(
-            fit: BoxFit.fill,
-            image: NetworkImage(AppConstants.SERVER_UPLOADS+item.thumbnail!)
-        )
+      borderRadius: BorderRadius.circular(15.w),
     ),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(25.w), // Dodano ClipRRect z borderRadius
+          child: AspectRatio(
+            aspectRatio: 1.5,
+            child: CachedNetworkImage(
+              imageUrl: AppConstants.SERVER_UPLOADS + item.thumbnail!,
+              fit: BoxFit.cover,
+              placeholder: (context, url) => CircularProgressIndicator(),
+              errorWidget: (context, url, error) => Icon(Icons.error),
+            ),
+          ),
+        ),
+        SizedBox(height: 5.h),
         Text(
-          item.name??"",
+          item.name ?? '',
           maxLines: 1,
           overflow: TextOverflow.fade,
           textAlign: TextAlign.left,
           softWrap: false,
           style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 11.sp),
+            color: AppColors.primaryThreeElementText,
+            fontWeight: FontWeight.bold,
+            fontSize: 11.sp,
+          ),
         ),
-        SizedBox(
-          height: 5.h,
-        ),
+        SizedBox(height: 5.h),
         Text(
-          item.description??"",
+          item.description ?? '',
           maxLines: 1,
           overflow: TextOverflow.fade,
           textAlign: TextAlign.left,
           softWrap: false,
           style: TextStyle(
-              color: AppColors.primaryFourElementText,
-              fontWeight: FontWeight.normal,
-              fontSize: 8.sp),
-        )
+            color: AppColors.primaryFourElementText,
+            fontWeight: FontWeight.normal,
+            fontSize: 8.sp,
+          ),
+        ),
       ],
     ),
   );
